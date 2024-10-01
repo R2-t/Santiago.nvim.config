@@ -3,15 +3,15 @@ return {
         "hrsh7th/nvim-cmp",
         event = "InsertEnter",
         dependencies = {
-            {"hrsh7th/cmp-nvim-lsp", after="nvim-cmp"},
-            {"hrsh7th/cmp-buffer", after="nvim-cmp"},
-            {"hrsh7th/cmp-path", after="nvim-cmp"},
-            {"hrsh7th/cmp-cmdline", after="nvim-cmp"},
+            { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" },
+            { "hrsh7th/cmp-buffer",   after = "nvim-cmp" },
+            { "hrsh7th/cmp-path",     after = "nvim-cmp" },
+            { "hrsh7th/cmp-cmdline",  after = "nvim-cmp" },
             {
                 "L3MON4D3/LuaSnip",
                 after = "nvim-cmp"
             },
-            {"saadparwaiz1/cmp_luasnip", after = "LuaSnip"}
+            { "saadparwaiz1/cmp_luasnip", after = "LuaSnip" }
         },
         config = function()
             local cmp = require("cmp")
@@ -22,16 +22,17 @@ return {
                     end
                 },
                 sources = cmp.config.sources({
-                    { name = "path" },
                     { name = "nvim_lsp" },
+                    { name = "supermaven" },
+                    { name = "path" },
                     { name = "nvim_lua" },
                     { name = "luasnip" },
-                    { name = "buffer" }
+                    { name = "buffer" },
                 }),
                 mapping = cmp.mapping.preset.insert({
                     ["<C-p>"] = cmp.mapping.select_prev_item(),
                     ["<C-n>"] = cmp.mapping.select_next_item(),
-                    ["<C-y>"] = cmp.mapping.confirm({select=true}),
+                    ["<C-y>"] = cmp.mapping.confirm({ select = true }),
                     ["<C-Space>"] = cmp.mapping.complete(),
                 }),
             })

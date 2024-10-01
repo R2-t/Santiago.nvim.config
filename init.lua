@@ -58,11 +58,31 @@ local function on_lsp_attach(ev)
     keymap("n", "<leader>vws", buf.workspace_symbol, opts)
     keymap("n", "<leader>vd", diagnostic.open_float, opts)
     keymap("n", "[d", diagnostic.goto_next, opts)
-    keymap("n", "]d", diagnostic.goto_prev, opts)
-    keymap("n", "<leader>vca", buf.code_action, opts)
     keymap("n", "<leader>vrr", buf.references, opts)
     keymap("n", "<leader>vrn", buf.rename, opts)
     keymap("i", "<C-h>", buf.signature_help, opts)
+
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    if client.supports_method("textDocument/formatting") then
+        vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = ev.buf,
+            callback = function()
+                vim.lsp.buf.format()
+            end
+        })
+    end
+
+    if client.supports_method("textDocumnet/inlayHint") then
+        vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
+    end
+
+    if client.name == "rust_analyzer" then
+        keymap("n", "<leader>vca", function() vim.cmd.RustLsp("codeAction") end, opts)
+        keymap("n", "[e", function() vim.cmd.RustLsp("explainError") end, opts)
+        keymap("n", "]d", function() vim.cmd.RustLsp("renderDiagnostic") end, opts)
+    else
+        keymap("n", "<leader>vca", buf.code_action, opts)
+    end
 end
 
 -- Define a function to clean up on LSP detach
@@ -92,7 +112,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     group = lsp_group,
     callback = on_lsp_attach,
 })
-vim.api.nvim_create_autocmd('LspDetach', {
-    group = lsp_group,
-    callback = on_lsp_detach,
-})
+--vim.api.nvim_create_autocmd('LspDetach', {
+--    group = lsp_group,
+--    callback = on_lsp_detach,
+--})

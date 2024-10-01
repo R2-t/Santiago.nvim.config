@@ -8,31 +8,17 @@ return {
         config = function()
             local masonLspconfig = require("mason-lspconfig")
             masonLspconfig.setup({
-                ensure_installed = { "lua_ls", "rust_analyzer", "tsserver", "astro", "pyright", "gopls" }
+                ensure_installed = { "lua_ls", "rust_analyzer", "tsserver", "astro", "pyright", "gopls", "jsonls", "eslint" }
             })
         end
     },
     {
-        "neovim/nvim-lspconfig",
+        "jay-babu/mason-nvim-dap.nvim",
         config = function()
-            local lspconfig = require("lspconfig")
-            local servers = { "lua_ls", "rust_analyzer", "tsserver", "astro", "pyright", "gopls" }
-            local capabilities = require("cmp_nvim_lsp").default_capabilities()
-            for _, server in ipairs(servers) do
-                lspconfig[server].setup({
-                    capabilities = capabilities
-                })
-            end
-
-            lspconfig.pyright.setup({
-                on_new_configs = function(new_config)
-                    local custom_config = require("santiago.lspconfig")
-                    local python_path = custom_config.get_python_path()
-                    if python_path then
-                        new_config.settings.python.pythonPath = python_path
-                    end
-                end
+            local masonNvimDap = require("mason-nvim-dap")
+            masonNvimDap.setup({
+                ensure_installed = { "delve" }
             })
         end
-    }
+    },
 }
