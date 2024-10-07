@@ -2,7 +2,7 @@ return {
     "neovim/nvim-lspconfig",
     config = function()
         local lspconfig = require("lspconfig")
-        local servers = { "lua_ls", "tsserver", "astro", "pyright", "gopls", "jsonls", "eslint" }
+        local servers = { "lua_ls", "tsserver", "astro", "pyright", "gopls", "jsonls", "eslint", "rust_analyzer" }
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
         for _, server in ipairs(servers) do
             lspconfig[server].setup({

@@ -8,7 +8,7 @@ return {
         config = function()
             local masonLspconfig = require("mason-lspconfig")
             masonLspconfig.setup({
-                ensure_installed = { "lua_ls", "rust_analyzer", "tsserver", "astro", "pyright", "gopls", "jsonls", "eslint" }
+                ensure_installed = { "lua_ls", "tsserver", "astro", "pyright", "gopls", "jsonls", "eslint" }
             })
         end
     },
