@@ -9,7 +9,7 @@ local root_dir = require('jdtls.setup').find_root(root_markers)
 
 local workspace_folder = eclipse_path .. vim.fn.fnamemodify(root_dir, ":p:h:t")
 
-local google_stype = eclipse_path .. "google-java-style.xml"
+local google_stype = eclipse_path .. "eclipse-java-google-style.xml"
 
 local base_path = home .. ".java/amazon-correto-%s.jdk"
 local java_21_path = string.format(base_path, "21")
